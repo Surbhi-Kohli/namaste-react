@@ -84,15 +84,16 @@ import {Component} from "path";
 
 # Types of testing (devloper)
  - Unit Testing
- - Integration Testing
- - End to End Testing - e2e testing
+ - Integration Testing --testing several components collaborated with each other
+ - End to End Testing - e2e testing testing the flow as soon as the user lands on website to the time user leaves the website(simulating user behaviour)
+
 
 # Setting up Testing in our app
  - Install React Testing Library
  - Installed jest
  - Installed Babel dependencies
  - Configure Babel 
- - Configure Parcel Config file to disable default babel transpilation 
+ - Configure Parcel Config file to disable default babel transpilation of parcel and use our custom babel config
  - Jest  - npx jest --init
  - Install jsdom library
  - Install @babel/preset-react - to make JSX work in test cases
