@@ -117,7 +117,8 @@ global.fetch--mocking fetch via jest
 
 When you use render from RTL, it renders the component and all of its child components recursively, creating a virtual representation of your component tree in memory. This means you can access and interact with the entire rendered component tree and its descendants, making it suitable for testing the behavior and interactions of nested components as well.
 
-    Consider a cart.js file with jsx as :
+Consider a cart.js file with jsx as :
+
            <div className="text-center m-4 p-4">
            <h1 className="text-2xl font-bold">Cart</h1>
            <div className="w-6/12 m-auto">
@@ -133,13 +134,16 @@ When you use render from RTL, it renders the component and all of its child comp
              <ItemList items={cartItems} />
            </div>
          </div>
-    where Item List:
+         
+where Item List:
    
         <div>
          <h1> hello Itemlist</h1>
          </div>
 
-    Test would be:
+ Test would be:   
+
+    
     it("test render of rtl",async()=>{
   const {container}=  await act(async()=> render(<BrowserRouter><Provider store={appStore}>
         <Cart/>
@@ -148,7 +152,10 @@ When you use render from RTL, it renders the component and all of its child comp
         screen.debug();//either of these will print the rendered component in the terminal
          console.log(container.innerHTML)//
          /*
-          <body>
+        
+})
+/*
+ <body>
         <div>
           <div
             class="text-center m-4 p-4"
@@ -179,8 +186,6 @@ When you use render from RTL, it renders the component and all of its child comp
         </div>
       </body>
          */
-
-})
 
 ## what is the screen object export by react testing library?
 Because querying the entire document.body is very common, DOM Testing Library also exports a screen object which has every query that is pre-bound to document.body (using the within functionality). Wrappers such as React Testing Library re-export screen so you can use it the same way.
