@@ -117,26 +117,27 @@ global.fetch--mocking fetch via jest
 
 When you use render from RTL, it renders the component and all of its child components recursively, creating a virtual representation of your component tree in memory. This means you can access and interact with the entire rendered component tree and its descendants, making it suitable for testing the behavior and interactions of nested components as well.
 
-Consider a cart.js file with jsx as :
-      <div className="text-center m-4 p-4">
-      <h1 className="text-2xl font-bold">Cart</h1>
-      <div className="w-6/12 m-auto">
-        <button
-          className=" p-2 m-2 bg-black text-white rounded-lg"
-          onClick={handleClearCart}
-        >
-          Clear Cart
-        </button>
-        {cartItems?.length === 0 && (
-          <h1> Cart is empty. Add Items to the cart!</h1>
-        )}
-        <ItemList items={cartItems} />
-      </div>
-    </div>
+    Consider a cart.js file with jsx as :
+           <div className="text-center m-4 p-4">
+           <h1 className="text-2xl font-bold">Cart</h1>
+           <div className="w-6/12 m-auto">
+             <button
+               className=" p-2 m-2 bg-black text-white rounded-lg"
+               onClick={handleClearCart}
+             >
+               Clear Cart
+             </button>
+             {cartItems?.length === 0 && (
+               <h1> Cart is empty. Add Items to the cart!</h1>
+             )}
+             <ItemList items={cartItems} />
+           </div>
+         </div>
     where Item List:
-    <div>
-     <h1> hello Itemlist</h1>
-     </div>
+   
+        <div>
+         <h1> hello Itemlist</h1>
+         </div>
 
     Test would be:
     it("test render of rtl",async()=>{
