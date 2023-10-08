@@ -145,17 +145,15 @@ where Item List:
 
     
     it("test render of rtl",async()=>{
-  const {container}=  await act(async()=> render(<BrowserRouter><Provider store={appStore}>
+       const {container}=  await act(async()=> render(<BrowserRouter><Provider store={appStore}>
         <Cart/>
         </Provider></BrowserRouter>));
 
         screen.debug();//either of these will print the rendered component in the terminal
-         console.log(container.innerHTML)//
-         /*
-        
-})
-/*
- <body>
+         console.log(container.innerHTML)//the output is as below
+      })
+     /*
+     <body>
         <div>
           <div
             class="text-center m-4 p-4"
