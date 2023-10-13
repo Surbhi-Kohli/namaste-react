@@ -100,3 +100,14 @@ import {Component} from "path";
  - Include @babel/preset-react inside my babel config
  - npm i -D @testing-library/jest-dom
  
+
+ //Inception notes:
+ VSCODE uses emmet
+ html:5 hit enter and u get basic html
+ Read about CDN
+
+ //costliest operation in browser is manipultion of dom nodes
+ //Check order of script tag and where to put them
+//If index.html's root already has a tag in it,will react created element be placed next to it or will the react element replace the e;
+//what is the difference between react dev and react prod cdn links
+React can be used in small portion of app

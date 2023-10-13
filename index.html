@@ -8,10 +8,35 @@
     <title>Namaste React</title>
   </head>
   <body>
+    <div>Hello top of root</div> 
+    <!-- the above wont be replaced by react -->
     <div id="root" class="root">
       <h1>Not Rendered</h1>
+      <!-- the above h1 gets replaced by react.render function's param object -->
     </div>
-
-    <script type="module" src="./src/App.js"></script>
+<script>
+  // const heading=document.createElement("h1");
+  // heading.innerHTML="hello world from js";
+  // const Root=document.getElementById("root");
+  // Root.appendChild(heading)
+  
+</script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <!-- <script>
+    const heading = React.createElement("h1",{},"Hello world from react");
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(heading)
+   </script> -->
+   <script src="./App.js"></script>
+   <!-- the order of import of scrips for react, reactdom and App.jsmatters
+  It has to be that we first import react and react dom b4 using app.js or
+   else we get error that react is not defined -->
+   <!-- Can we put scripts in head tag -->
   </body>
 </html>
+
+<!-- //why we use cdn, what is crossorigin here
+//first file- react.development.js= core of react\
+//react-dom: file for dom manipulations
+///why not club:because react not just exists on browser, we have react-native, react 3d etc -->
