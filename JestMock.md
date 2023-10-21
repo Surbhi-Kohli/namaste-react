@@ -103,10 +103,11 @@ There are three main types of module and function mocking in Jest:
  * jest.spyOn: Spy or mock a function
    
 Each of these will, in some way, create the Mock Function. To explain how each of these does that, consider this project structure: 
-├ example/
-| └── app.js
-| └── app.test.js
-| └── math.js
+
+              ├ example/
+              | └── app.js
+              | └── app.test.js
+              | └── math.js
 
 In this setup, it is common to test app.js and want to either not call the actual math.js functions, or spy them to make sure they’re called as expected. This example is trite, but imagine that math.js is a complex computation or requires some IO you want to avoid making:
 
@@ -193,7 +194,7 @@ Sometimes you only want to watch a method be called, but keep the original imple
 
 In these cases, you can use jest.spyOn.
 
-Here we simply “spy” calls to the math function, but leave the original implementation in place:
+Here we simply “spy” calls to the math function, but **leave the original implementation in place**:
 
 
 mock_jest_spyOn.test.js 
@@ -203,7 +204,9 @@ mock_jest_spyOn.test.js
             import * as math from "./math";
             
             test("calls math.add", () => {
-              const addMock = jest.spyOn(math, "add");
+             
+             
+            //spy on the add method within the math module, without changing the implementation                 const addMock = jest.spyOn(math, "add"); 
             
               // calls the original implementation
               expect(app.doAdd(1, 2)).toEqual(3);
@@ -274,7 +277,7 @@ In fact, this is exactly how jest.spyOn is implemented(https://github.com/jestjs
 
 Source for the above : https://github.com/jestjs/jest/blob/e9aa321e0587d0990bd2b5ca5065e84a1aecb2fa/packages/jest-mock/src/index.js#L674-L708
 
-jest.spyon vs jest.mock (ChatAI)
+## jest.spyon vs jest.mock (ChatAI)
 jest.spyOn and jest.mock are both part of the Jest testing framework, but they serve different purposes.
 
 1.jest.spyOn:
@@ -316,7 +319,7 @@ In this example, we create a spy on the add method of the Calculator class, allo
           return a * b;
         }
         
-        const spy = jest.spyOn(global, 'multiply');
+        const spy = jest.spyOn(global, 'multiply');//or jest.spyon('multiply')
         
         const result = multiply(4, 5);
         
@@ -348,6 +351,24 @@ In this case, we create a spy on a global function (multiply), and we can track 
           expect(spy).toHaveBeenCalledWith(10, 2);
           expect(console.log).toHaveBeenCalledWith('Result:', 5);
 
+
+Another example:
+
+          // math.js
+          export function square(x) {
+            return x * x;
+          }
+          
+          // test.js
+          import * as math from './math';
+          
+          const squareSpy = jest.spyOn(math, 'square');
+          math.square(4);
+          
+          expect(squareSpy).toHaveBeenCalledWith(4);
+
+
+
 Here, we create a spy on the divide function from the math.js module and ensure it is called with the correct arguments.
 
 4.Spying on Class Constructors:
@@ -369,8 +390,64 @@ Here, we create a spy on the divide function from the math.js module and ensure 
             expect(myCar.model).toBe('Camry');
             expect(spy).toHaveBeenCalled();
 
+Another example:
+            class MyClass {
+            constructor() {
+              this.value = 42;
+            }
+          }
+          
+          const constructorSpy = jest.spyOn(MyClass, 'constructor');
+          const instance = new MyClass();
+          
+          expect(constructorSpy).toHaveBeenCalledTimes(1);
+5.Spying on Static Methods:
+You can also use jest.spyOn to spy on static methods of a class:
 
-5.Spying on Asynchronous Functions:
+        class MyClass {
+          static staticMethod() {
+            return 'Static method called';
+          }
+        }
+        
+        const staticMethodSpy = jest.spyOn(MyClass, 'staticMethod');
+        MyClass.staticMethod();
+        
+        expect(staticMethodSpy).toHaveBeenCalled();
+        
+6.Spying on Getter/Setter Properties:
+
+You can spy on getter and setter properties of a class to track when they are accessed 
+or modified:
+
+        class Person {
+          constructor(name) {
+            this._name = name;
+          }
+        
+          get name() {
+            return this._name;
+          }
+        
+          set name(newName) {
+            this._name = newName;
+          }
+        }
+        
+        const person = new Person('Alice');
+        const getNameSpy = jest.spyOn(person, 'name', 'get');
+        const setNameSpy = jest.spyOn(person, 'name', 'set');
+
+// Access the getter
+const name = person.name;
+expect(getNameSpy).toHaveBeenCalled();
+
+// Access the setter
+person.name = 'Bob';
+expect(setNameSpy).toHaveBeenCalled();
+
+
+7.Spying on Asynchronous Functions:
 
 
             async function fetchData() {
@@ -384,8 +461,72 @@ Here, we create a spy on the divide function from the math.js module and ensure 
             
             expect(spy).toHaveBeenCalled();
             expect(result).toBe('Some data');
+            
+ You can also use jest.spyOn to spy on asynchronous functions and ensure they are called as expected.
 
+8.Spying on methods of mocked objects:
+You can also use jest.spyOn with mocked objects to track calls to their methods:
+            const mockObject = {
+              someMethod: () => {},
+            };
+            
+            jest.spyOn(mockObject, 'someMethod');
+            mockObject.someMethod();
+            
+            expect(mockObject.someMethod).toHaveBeenCalled();
 
-You can also use jest.spyOn to spy on asynchronous functions and ensure they are called as expected.
+9.Spies with Mocked Implementations:
+
+            class Greeter {
+              greet(name) {
+                return `Hello, ${name}!`;
+              }
+            }
+            
+            const greeter = new Greeter();
+            
+            const greetSpy = jest.spyOn(greeter, 'greet');
+            greetSpy.mockReturnValue('Custom Greeting');
+            
+            expect(greeter.greet('Alice')).toBe('Custom Greeting');
+
+10.Spying on Built-in Functions:
+You can also use jest.spyOn to spy on built-in functions or methods, like console.log:
+
+            jest.spyOn(console, 'log');
+            console.log('Hello, world!');
+            
+            expect(console.log).toHaveBeenCalledWith('Hello, world!');
+
 
 These are just a few examples of how you can use jest.spyOn to create spies on various types of functions and methods for different use cases in your tests. Spies help you monitor the behavior of these functions/methods and make assertions about their usage.
+
+## Examples of jest.mock
+Suppose you have a module named api.js with a function fetchData, and you want to test a module dataProcessor.js that uses this function:
+
+
+        // api.js
+        export function fetchData() {
+          // Actual implementation making an HTTP request
+        }
+        
+        // dataProcessor.js
+        import { fetchData } from './api';
+        
+        export function processData() {
+          const data = fetchData();
+          // Process the data
+        }
+
+In your test for dataProcessor.js, you can use jest.mock to mock the api.js module like this:
+
+        jest.mock('./api'); // Mock the api.js module
+        const { processData } = require('./dataProcessor');
+        
+        test('processData', () => {
+          // Mock fetchData to return a specific value
+          fetchData.mockReturnValue({ some: 'data' });
+        
+          // Test processData
+          expect(processData()).toEqual({ some: 'data' });
+        });
