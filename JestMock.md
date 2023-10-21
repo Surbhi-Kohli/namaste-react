@@ -17,6 +17,7 @@ With this and Jest Expect, it’s easy to test the captured calls:
 
              
              mock_basic.js:
+             
                  test("returns undefined by default", () => {
                  const mock = jest.fn();
  
@@ -117,8 +118,8 @@ math.js:
              export const divide   = (a, b) => b / a;
 
 app.js:
-            import * as math from './math.js';
 
+            import * as math from './math.js';
             export const doAdd      = (a, b) => math.add(a, b);
             export const doSubtract = (a, b) => math.subtract(a, b);
             export const doMultiply = (a, b) => math.multiply(a, b);
@@ -269,7 +270,7 @@ mock_jest_spyOn_sugar.js :
               });
 
 
-              In fact, this is exactly how jest.spyOn is implemented(https://github.com/jestjs/jest/blob/e9aa321e0587d0990bd2b5ca5065e84a1aecb2fa/packages/jest-mock/src/index.js#L674-L708).
+In fact, this is exactly how jest.spyOn is implemented(https://github.com/jestjs/jest/blob/e9aa321e0587d0990bd2b5ca5065e84a1aecb2fa/packages/jest-mock/src/index.js#L674-L708).
 
 
                 
